@@ -1,18 +1,17 @@
-// compile with c++11 standard
+// Part of cosmos from opengenus foundation
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
-using namespace std;
+
 int main()
 {
-  // initialising amd constructing vector array
-  vector<int> vec = {10,5,20,15,-1};
+    std::vector<int> arr;
+    std::cout << "Keep entering numbers (EOF to stop): ";
+    for (int num; std::cin >> num;)
+        arr.push_back(num);
 
-  // sorting the vector
-  sort(vec.begin(), vec.end());
+    sort(arr.begin(), arr.end());
 
-  // printing the last element
-  cout<<"biggest number is : "<<vec[vec.size() - 1]
-  return 0;
+    std::cout << "biggest number : " << arr.back();
 }

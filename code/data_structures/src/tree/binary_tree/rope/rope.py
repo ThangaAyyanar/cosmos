@@ -57,7 +57,9 @@ class Rope:
         else:
             self.head = node()
 
-    def Index(self, ind, node=self.head):
+    def Index(self, ind, node=None):
+        if node is None:
+            node = self.head
         if node.weight <= ind:
             return self.Index(ind - node.weight, node.right)
         elif node.left:
@@ -75,7 +77,7 @@ class Rope:
         result = Rope()
         tmp = self.head
         splitOff = list()
-        #Lookup the node with the index
+        # Lookup the node with the index
         while True:
             if tmp.weight <= ind and tmp.right:
                 ind = ind - tmp.weight
@@ -84,7 +86,7 @@ class Rope:
                 tmp = tmp.left
             else:
                 break
-        #Split that node if the split point is in a node
+        # Split that node if the split point is in a node
         if ind != 0:
             node1 = node(tmp.data[:ind])
             node2 = node(tmp.data[ind:])
@@ -102,7 +104,7 @@ class Rope:
                 tmp.addChild("right", nodeParent)
                 tmp = nodeParent.right
 
-        #Get everything else to the right of ind
+        # Get everything else to the right of ind
         first = True
         while tmp.parent:
             if not tmp.parent.left:
@@ -117,7 +119,7 @@ class Rope:
                 tmp = tmp.parent
                 splitOff.append(tmp.removeChild("right"))
 
-        #Make a rope with the content right of ind to return
+        # Make a rope with the content right of ind to return
         rightRope = rope()
         while len(splitOff) > 0:
             rightRope.insert(0, splitOff.pop(0))

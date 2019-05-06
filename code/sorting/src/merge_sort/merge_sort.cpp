@@ -1,71 +1,76 @@
 /*
- Part of Cosmos by OpenGenus Foundation
+ * Part of Cosmos by OpenGenus Foundation
+ *
+ * merge sort synopsis
+ *
+ * namespace merge_sort_impl {
+ * template<typename _Random_Acccess_Iter>
+ * _Random_Acccess_Iter
+ * advance(_Random_Acccess_Iter it, std::ptrdiff_t n);
+ * } // merge_sort_impl
+ *
+ * template<typename _Random_Acccess_Iter, typename _Compare>
+ * void mergeSort(_Random_Acccess_Iter begin, _Random_Acccess_Iter end, _Compare comp);
+ *
+ * template<typename _Random_Acccess_Iter>
+ * void mergeSort(_Random_Acccess_Iter begin, _Random_Acccess_Iter end);
+ */
 
- merge sort synopsis
+#include <list>
+#include <iterator>
+#include <cstddef>
 
 namespace merge_sort_impl {
-    template<typename _Random_Acccess_Iter>
-    _Random_Acccess_Iter
-    advance(_Random_Acccess_Iter it, ptrdiff_t n);
+template<typename _Random_Acccess_Iter>
+_Random_Acccess_Iter
+advance(_Random_Acccess_Iter it, std::ptrdiff_t n)
+{
+    std::advance(it, n);
+
+    return it;
 }
 
 template<typename _Random_Acccess_Iter, typename _Compare>
-void mergeSort(_Random_Acccess_Iter begin, _Random_Acccess_Iter end, _Compare comp);
+void merge(_Random_Acccess_Iter begin,
+           _Random_Acccess_Iter end,
+           _Compare comp)
+{
+    using value_type = typename std::iterator_traits<_Random_Acccess_Iter>::value_type;
+    auto end1 = begin;
+    std::advance(end1, std::distance(begin, end) >> 1);
 
-template<typename _Random_Acccess_Iter>
-void mergeSort(_Random_Acccess_Iter begin, _Random_Acccess_Iter end);
- */
+    auto begin1 = begin,
+         begin2 = end1,
+         end2 = end;
 
-#include <vector>
-#include <iterator>
+    std::list<value_type> tmp{};
 
-namespace merge_sort_impl {
-    template<typename _Random_Acccess_Iter>
-    _Random_Acccess_Iter
-    advance(_Random_Acccess_Iter it, ptrdiff_t n)
+    while (begin1 < end1 && begin2 < end2)
+        tmp.push_back(comp(*begin1, *begin2) ? *begin1++ : *begin2++);
+    while (begin1 < end1)
+        *--begin2 = *--end1;
+    while (!tmp.empty())
     {
-        std::advance(it, n);
-
-        return it;
+        *--begin2 = tmp.back();
+        tmp.pop_back();
     }
 }
+} // merge_sort_impl
 
 template<typename _Random_Acccess_Iter, typename _Compare>
 void
 mergeSort(_Random_Acccess_Iter begin, _Random_Acccess_Iter end, _Compare comp)
 {
-    using value_type = typename std::iterator_traits<_Random_Acccess_Iter>::value_type;
-    using namespace merge_sort_impl;
-    using std::distance;
-    using std::vector;
-
-    if (begin != end)
+    size_t dist = std::distance(begin, end);
+    if (dist > 1)
     {
-        _Random_Acccess_Iter leftMin, leftMax, rightMin, rightMax;
-        auto length = distance(begin, end);
-        vector<value_type> tmp(length);
+        auto mid = begin;
+        std::advance(mid, dist >> 1);
 
-        // bottom-up version
-        for (auto i = 1; i < distance(begin, end); i *= 2)
-        {
-            for (leftMin = begin; leftMin != end; leftMin = rightMax)
-            {
-                rightMin = leftMax = advance(leftMin, i);
-                rightMax = advance(leftMax, i);
+        mergeSort(begin, mid, comp);
+        mergeSort(mid, end, comp);
 
-                // prevent overflow, if length is not 2^n
-                if (rightMax > end)
-                    rightMax = end;
-
-                auto next = 0;
-                while (leftMin < leftMax && rightMin < rightMax)
-                    tmp[next++] = comp(*rightMin, *leftMin) ? *rightMin++ : *leftMin++;
-                while (leftMin < leftMax)
-                    *--rightMin = *--leftMax;
-                while (next > 0)
-                    *--rightMin = tmp[--next];
-            }
-        }
+        merge_sort_impl::merge(begin, end, comp);
     }
 }
 

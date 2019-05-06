@@ -1,6 +1,6 @@
 /*
- * Huffman Codes 
-*/
+ * Huffman Codes
+ */
 // Part of Cosmos by OpenGenus Foundation
 #include <iostream> // std::cout, std::endl
 #include <map> // std::map
@@ -9,21 +9,23 @@
 
 struct huff_node
 {
-    huff_node *left, *right;
     float weight;
+    huff_node *left, *right;
 
     huff_node(float w, huff_node *l, huff_node *r)
-      : weight(w), left(l), right(r)
-    {}
+        : weight(w), left(l), right(r)
+    {
+    }
 
-    ~huff_node()
+    virtual ~huff_node()
     {
         delete left;
         delete right;
     }
 
-    virtual void print(std::string prefix)
-    {}
+    virtual void print(std::string)
+    {
+    }
 };
 
 struct huff_leaf : public huff_node
@@ -31,8 +33,9 @@ struct huff_leaf : public huff_node
     char letter;
 
     huff_leaf(char c, float w)
-      : huff_node(w, nullptr, nullptr), letter(c)
-    {}
+        : huff_node(w, nullptr, nullptr), letter(c)
+    {
+    }
 
     void print(std::string prefix = "")
     {
@@ -45,7 +48,7 @@ struct Compare
 {
     bool operator()(huff_node *a, huff_node *b)
     {
-        return a->weight > b-> weight;
+        return a->weight > b->weight;
     }
 };
 
@@ -55,7 +58,7 @@ huff_node * merge_nodes(huff_node *a, huff_node *b)
 }
 
 typedef std::priority_queue<huff_node*, std::vector<huff_node*>, Compare>
-        huff_priority_queue;
+    huff_priority_queue;
 
 huff_node * encode(std::map<char, float> &m)
 {
@@ -66,12 +69,12 @@ huff_node * encode(std::map<char, float> &m)
     // weighted by its associated weight, and put each leaf into
     // priority queue
     std::map<char, float>::iterator it;
-    for (it = m.begin(); it != m.end(); it++) {
+    for (it = m.begin(); it != m.end(); it++)
         pq.push(new huff_leaf(it->first, it->second));
-    }
 
     // create the tree
-    while (pq.size() > 1) {
+    while (pq.size() > 1)
+    {
         a = pq.top();
         pq.pop();
         b = pq.top();
@@ -83,14 +86,16 @@ huff_node * encode(std::map<char, float> &m)
     return pq.top();
 }
 
-void print_tree(huff_node *node, std::string prefix="")
+void print_tree(huff_node *node, std::string prefix = "")
 {
     node->print(prefix);
-    if (node->left) { print_tree(node->left, prefix+"0"); }
-    if (node->right) { print_tree(node->right, prefix+"1"); }
+    if (node->left)
+        print_tree(node->left, prefix + "0");
+    if (node->right)
+        print_tree(node->right, prefix + "1");
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     // dictionary of letters w/ frequency in English
     std::map<char, float> freq = {
@@ -126,4 +131,3 @@ int main(int argc, char *argv[])
     print_tree(root);
     return 0;
 }
-

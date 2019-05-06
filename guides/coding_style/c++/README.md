@@ -31,7 +31,7 @@
 - [Aliases](#aliases)
 
 ## Comments
-Single line comments should use the standard style (`//`), and multi line comments should use multiline comments (`/* */`). There should be a space between the comment delimiter and the comment text (unless pure-code synopsis).
+Single line comments should use the standard style (`//`), and multi line comments should use multiline comments (`/* */`). There should be a space between the comment delimiter and the comment text.
 
 ```C++
 // Example text
@@ -43,19 +43,19 @@ Single line comments should use the standard style (`//`), and multi line commen
  */
 
 /*
-
- Simple multiline comment
-
- vector synopsis
-
-template <class T, class Allocator = allocator<T> >
-class vector
-{
-public:
-    using value_type = T;
-    using allocator_type = Allocator;
-}
-*/
+ *
+ * Simple multiline comment
+ *
+ * vector synopsis
+ *
+ * template <class T, class Allocator = allocator<T> >
+ * class vector
+ * {
+ * public:
+ *     using value_type = T;
+ *     using allocator_type = Allocator;
+ * }
+ */
 ```
 
 ## Code Width and Alignment
@@ -137,6 +137,36 @@ class Dummy
 
     const int *const *getOtherPointer() const;
 };
+```
+
+- The logical operators should be placed after their conditions if there are many of them. If adding parentheses makes your intent clearer then go ahead and add them.
+
+```C++
+void foo()
+{
+    bool res = true;
+
+    short i = 1;
+    long sum_short = 1;
+    while (i != 0 && ++i)
+        sum_short += i;
+
+    if (i == 0 && (0 == i))
+        res &= true;
+    else
+        res &= false;
+
+    if ((1 != 0) &&
+        (1 == true || 0 == false))
+        res &= true;
+    else
+        res &= false;
+
+    if (res != true ||
+        (!(res == true) ||
+         (res == false)))
+        cout << "wrong\n";
+}
 ```
 
 ## Spaces
@@ -240,7 +270,7 @@ private:
 ```
 
 ## Braces
-When using braces, put them on their own lines. `for`s, `if`s and loops that have one line statements, omit the braces (unless 1. between `do` and `while` on do-while statements, 2. dangling else).
+When using braces, put them on their own lines. When loops or `if` statements have only one statement, omit the braces (unless between `do` and `while` on do-while statements or to disambiguate a dangling else).
 
 ```C++
 int main()
@@ -272,7 +302,7 @@ int main()
 ```
 
 ## Naming
-Names should be descriptive and avoid abbreviation (unless that most people know what mean for), and abbreviation should like .
+Names should be descriptive and avoid abbreviations, unless the abbreviation is commonly known.
 ```C++
 int errorFlag;
 int currentIter;    // the certain universally-known abbrs ("Iter") are OK
@@ -438,7 +468,7 @@ void exampleFunction(int pod, const Example& object, char& modifiableChar)
 ```
 
 ## Classes
-### Order of encapsulation
+### Order of Encapsulation
 When listing members of a class, if possible list them in the order public, private, then protected. If using `using` for aliases, or using base class constructors, then the order can be broken. In this case, if possible, try and list the public interface of the class first.
 Encapsulation labels should be indented to the same level as the class. Add a new line after the end of each label for readability.
 
@@ -462,7 +492,7 @@ protected:
 };
 ```
 
-### Order of member functions
+### Order of Member Functions
 When listing member functions of a class, first list the main constructor, then secondary constructors, and then copy assignment/copy construction/move assignment/move construction functions.
 After this, add the destructor. Then, add a new line, and then list all members of the class.
 
@@ -482,6 +512,20 @@ public:
 
 private:
     int value_;
+};
+```
+
+### Member Initializer List
+When declaring a constructor, use a member initializer list to initialize class members.
+
+```C++
+class Example
+{
+public:
+    Example(int a, int b) : a_{a}, b_{b} { }
+
+private:
+    int a_, b_;
 };
 ```
 

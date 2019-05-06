@@ -7,11 +7,11 @@ def pangram_checker(text):
     arr = [False] * 26
 
     for c in text:
-        if ((c >= 'a' and c <= 'z') or (c >= 'A' and c <= 'Z')):
+        if (c >= "a" and c <= "z") or (c >= "A" and c <= "Z"):
 
             # The character is a letter.
             c = c.lower()
-            c = ord(c) - ord('a')
+            c = ord(c) - ord("a")
             arr[c] = True
 
     # Checking if arr is all true value
@@ -19,6 +19,4 @@ def pangram_checker(text):
     for index in arr:
         if not index:
             return False
-
-
     return True

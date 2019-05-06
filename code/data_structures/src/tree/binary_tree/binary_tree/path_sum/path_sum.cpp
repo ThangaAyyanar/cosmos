@@ -1,5 +1,5 @@
 /*
- Part of Cosmos by OpenGenus Foundation
+ * Part of Cosmos by OpenGenus Foundation
  */
 
 #ifndef path_sum_cpp
@@ -18,11 +18,10 @@
 // public
 template<typename _Ty, typename _Compare, class _TreeNode>
 auto
-PathSum<_Ty, _Compare, _TreeNode>::countPathsOfSum(PNode<_Ty> root, _Ty sum)->size_type {
+PathSum<_Ty, _Compare, _TreeNode>::countPathsOfSum(PNode<_Ty> root, _Ty sum)->size_type
+{
     if (path_type_ == PathType::Whole)
-    {
         return getPathsOfSum(root, sum).size();
-    }
     else        // path_type_ == PathType::Part
     {
         if (root == nullptr)
@@ -31,14 +30,15 @@ PathSum<_Ty, _Compare, _TreeNode>::countPathsOfSum(PNode<_Ty> root, _Ty sum)->si
         }
 
         return getPathsOfSum(root, sum).size()
-               + countPathsOfSum(root->left, sum)
-               + countPathsOfSum(root->right, sum);
+               + countPathsOfSum(root->left(), sum)
+               + countPathsOfSum(root->right(), sum);
     }
 }
 
 template<typename _Ty, typename _Compare, class _TreeNode>
 std::vector<std::vector<_Ty>>
-PathSum<_Ty, _Compare, _TreeNode>::getPathsOfSum(PNode<_Ty> root, _Ty sum) {
+PathSum<_Ty, _Compare, _TreeNode>::getPathsOfSum(PNode<_Ty> root, _Ty sum)
+{
     std::vector<std::vector<_Ty>> res{};
     getPathsOfSumUp(root, {}, {}, sum, res);
 
@@ -55,34 +55,30 @@ PathSum<_Ty, _Compare, _TreeNode>::getPathsOfSumUp(PNode<_Ty> root,
                                                    std::vector<_Ty> prev,
                                                    _Ty prev_sum,
                                                    _Ty const &sum,
-                                                   std::vector<std::vector<_Ty>> &res) {
+                                                   std::vector<std::vector<_Ty>> &res)
+{
     if (root != nullptr)
     {
         auto &curr = prev;
-        curr.push_back(root->val);
+        curr.push_back(root->value());
 
         auto &curr_sum = prev_sum;
-        curr_sum += root->val;
+        curr_sum += root->value();
 
         if (path_type_ == PathType::Whole)
         {
-            if (root->left == nullptr
-                && root->right == nullptr
+            if (root->left() == nullptr
+                && root->right() == nullptr
                 && compare_(curr_sum, sum))
-            {
                 res.push_back(curr);
-            }
         }
         else        // path_type_ == PathType::Part
-        {
-            if (compare_(curr_sum, sum))
-            {
-                res.push_back(curr);
-            }
-        }
+        if (compare_(curr_sum, sum))
+            res.push_back(curr);
 
-        getPathsOfSumUp(root->left, curr, curr_sum, sum, res);
-        getPathsOfSumUp(root->right, curr, curr_sum, sum, res);
+
+        getPathsOfSumUp(root->left(), curr, curr_sum, sum, res);
+        getPathsOfSumUp(root->right(), curr, curr_sum, sum, res);
     }
 }
 

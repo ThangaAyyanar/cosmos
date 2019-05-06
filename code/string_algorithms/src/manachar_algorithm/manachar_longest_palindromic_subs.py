@@ -6,27 +6,27 @@ def get_palindrome_length(string, index):
             length += 1
         else:
             break
-        
+
     return length - 1
 
 
 def interleave(string):
     ret = []
     for s in string:
-        ret.extend(['#', s])
-    ret.append('#')
-    
-    return ''.join(ret)
+        ret.extend(["#", s])
+    ret.append("#")
+
+    return "".join(ret)
 
 
 def manacher(string):
     right = 0
     center = 0
     string = interleave(string)
-    P = map(lambda e: 0, xrange(len(string)))
-    
-    for i in xrange(1, len(string)):
-        mirror = 2*center - i
+    P = list(map(lambda e: 0, range(len(string))))
+
+    for i in range(1, len(string)):
+        mirror = 2 * center - i
         if i + P[mirror] <= right and mirror >= len(string) - i:
             P[i] = P[mirror]
         else:
@@ -35,8 +35,8 @@ def manacher(string):
             if plength > 1:
                 center = int(i)
                 right = center + plength
-    
-    return [e/2 for e in P]
+
+    return [e / 2 for e in P]
 
 
 def get_palindrome_number(string):

@@ -1,14 +1,15 @@
 /*
- Part of Cosmos by OpenGenus Foundation
-
- test lists for std::list-like
+ * Part of Cosmos by OpenGenus Foundation
+ *
+ * test lists for std::list-like
  */
 
+#define CATCH_CONFIG_MAIN
 #ifndef XOR_LINKED_LIST_TEST_CPP
 #define XOR_LINKED_LIST_TEST_CPP
 
-#include "catch.hpp"
-#include "xor_linked_list.cpp"
+#include "../../../../test/c++/catch.hpp"
+#include "../../src/list/xor_linked_list/xor_linked_list.cpp"
 #include <iostream>
 #include <list>
 #include <vector>
@@ -48,7 +49,7 @@ vectorContainer getRandomValueContainer(size_t sz = RandomSize)
     return container;
 }
 
-actualListContainer copyContainerToActualList(const vectorContainer &container)
+actualListContainer copyContainerToList(const vectorContainer &container)
 {
     actualListContainer actual;
     std::for_each(container.begin(), container.end(), [&](int v)
@@ -60,8 +61,8 @@ actualListContainer copyContainerToActualList(const vectorContainer &container)
 }
 
 void copyRandomPartContainerToLists(const vectorContainer &container,
-                                          expectListContainer &expect,
-                                          actualListContainer &actual)
+                                    expectListContainer &expect,
+                                    actualListContainer &actual)
 {
     std::for_each(container.begin(), container.end(), [&](int v)
     {
@@ -340,138 +341,138 @@ TEST_CASE("const semantic")
         {
             CHECK(is_const<decltype(actual.begin())>() == is_const<decltype(expect.begin())>());
             CHECK(is_const<decltype(actual.begin().operator->())>()
-                == is_const<decltype(expect.begin().operator->())>());
+                  == is_const<decltype(expect.begin().operator->())>());
             CHECK(is_const<decltype(*actual.begin())>() == is_const<decltype(*expect.begin())>());
             CHECK(is_const<decltype(actual.end())>() == is_const<decltype(expect.end())>());
             CHECK(is_const<decltype(actual.end().operator->())>()
-                == is_const<decltype(expect.end().operator->())>());
+                  == is_const<decltype(expect.end().operator->())>());
             CHECK(is_const<decltype(*actual.end())>() == is_const<decltype(*expect.end())>());
 
             CHECK(is_const<decltype(actual.cbegin())>() == is_const<decltype(expect.cbegin())>());
             CHECK(is_const<decltype(actual.cbegin().operator->())>()
-                == is_const<decltype(expect.cbegin().operator->())>());
+                  == is_const<decltype(expect.cbegin().operator->())>());
             CHECK(is_const<decltype(*actual.cbegin())>()
-                == is_const<decltype(*expect.cbegin())>());
+                  == is_const<decltype(*expect.cbegin())>());
             CHECK(is_const<decltype(actual.cend())>() == is_const<decltype(expect.cend())>());
             CHECK(is_const<decltype(actual.cend().operator->())>()
-                == is_const<decltype(expect.cend().operator->())>());
+                  == is_const<decltype(expect.cend().operator->())>());
             CHECK(is_const<decltype(*actual.cend())>() == is_const<decltype(*expect.cend())>());
 
             CHECK(is_const<decltype(actual.rbegin())>() == is_const<decltype(expect.rbegin())>());
             CHECK(is_const<decltype(actual.rbegin().operator->())>()
-                == is_const<decltype(expect.rbegin().operator->())>());
+                  == is_const<decltype(expect.rbegin().operator->())>());
             CHECK(is_const<decltype(*actual.rbegin())>()
-                == is_const<decltype(*expect.rbegin())>());
+                  == is_const<decltype(*expect.rbegin())>());
             CHECK(is_const<decltype(actual.rend())>() == is_const<decltype(expect.rend())>());
             CHECK(is_const<decltype(actual.rend().operator->())>()
-                == is_const<decltype(expect.rend().operator->())>());
+                  == is_const<decltype(expect.rend().operator->())>());
             CHECK(is_const<decltype(*actual.rend())>() == is_const<decltype(*expect.rend())>());
 
             CHECK(is_const<decltype(actual.crbegin())>()
-                == is_const<decltype(expect.crbegin())>());
+                  == is_const<decltype(expect.crbegin())>());
             CHECK(is_const<decltype(actual.crbegin().operator->())>()
-                == is_const<decltype(expect.crbegin().operator->())>());
+                  == is_const<decltype(expect.crbegin().operator->())>());
             CHECK(is_const<decltype(*actual.crbegin())>()
-                == is_const<decltype(*expect.crbegin())>());
+                  == is_const<decltype(*expect.crbegin())>());
             CHECK(is_const<decltype(actual.crend())>() == is_const<decltype(expect.crend())>());
             CHECK(is_const<decltype(actual.crend().operator->())>()
-                == is_const<decltype(expect.crend().operator->())>());
+                  == is_const<decltype(expect.crend().operator->())>());
             CHECK(is_const<decltype(*actual.crend())>() == is_const<decltype(*expect.crend())>());
 
             CHECK(is_const<decltype(actual.rbegin().base())>()
-                == is_const<decltype(expect.rbegin().base())>());
+                  == is_const<decltype(expect.rbegin().base())>());
             CHECK(is_const<decltype(actual.rbegin().base().operator->())>()
-                == is_const<decltype(expect.rbegin().base().operator->())>());
+                  == is_const<decltype(expect.rbegin().base().operator->())>());
             CHECK(is_const<decltype(*actual.rbegin().base())>()
-                == is_const<decltype(*expect.rbegin().base())>());
+                  == is_const<decltype(*expect.rbegin().base())>());
             CHECK(is_const<decltype(actual.rend().base())>()
-                == is_const<decltype(expect.rend().base())>());
+                  == is_const<decltype(expect.rend().base())>());
             CHECK(is_const<decltype(actual.rend().base().operator->())>()
-                == is_const<decltype(expect.rend().base().operator->())>());
+                  == is_const<decltype(expect.rend().base().operator->())>());
             CHECK(is_const<decltype(*actual.rend().base())>()
-                == is_const<decltype(*expect.rend().base())>());
+                  == is_const<decltype(*expect.rend().base())>());
 
             CHECK(is_const<decltype(actual.crbegin().base())>()
-                == is_const<decltype(expect.crbegin().base())>());
+                  == is_const<decltype(expect.crbegin().base())>());
             CHECK(is_const<decltype(actual.crbegin().base().operator->())>()
-                == is_const<decltype(expect.crbegin().base().operator->())>());
+                  == is_const<decltype(expect.crbegin().base().operator->())>());
             CHECK(is_const<decltype(actual.crend().base())>()
-                == is_const<decltype(expect.crend().base())>());
+                  == is_const<decltype(expect.crend().base())>());
             CHECK(is_const<decltype(*actual.crbegin().base())>()
-                == is_const<decltype(*expect.crbegin().base())>());
+                  == is_const<decltype(*expect.crbegin().base())>());
             CHECK(is_const<decltype(*actual.crbegin().base().operator->())>()
-                == is_const<decltype(*expect.crbegin().base().operator->())>());
+                  == is_const<decltype(*expect.crbegin().base().operator->())>());
             CHECK(is_const<decltype(*actual.crend().base())>()
-                == is_const<decltype(*expect.crend().base())>());
+                  == is_const<decltype(*expect.crend().base())>());
         }
 
         SECTION("const")
         {
             CHECK(is_const<decltype(cActual.begin())>() == is_const<decltype(cExpect.begin())>());
             CHECK(is_const<decltype(cActual.begin().operator->())>()
-                == is_const<decltype(cExpect.begin().operator->())>());
+                  == is_const<decltype(cExpect.begin().operator->())>());
             CHECK(is_const<decltype(*cActual.begin())>() == is_const<decltype(*cExpect.begin())>());
             CHECK(is_const<decltype(cActual.end())>() == is_const<decltype(cExpect.end())>());
             CHECK(is_const<decltype(cActual.end().operator->())>()
-                == is_const<decltype(cExpect.end().operator->())>());
+                  == is_const<decltype(cExpect.end().operator->())>());
             CHECK(is_const<decltype(*cActual.end())>() == is_const<decltype(*cExpect.end())>());
 
             CHECK(is_const<decltype(cActual.cbegin())>() == is_const<decltype(cExpect.cbegin())>());
             CHECK(is_const<decltype(cActual.cbegin().operator->())>()
-                == is_const<decltype(cExpect.cbegin().operator->())>());
+                  == is_const<decltype(cExpect.cbegin().operator->())>());
             CHECK(is_const<decltype(*cActual.cbegin())>()
-                == is_const<decltype(*cExpect.cbegin())>());
+                  == is_const<decltype(*cExpect.cbegin())>());
             CHECK(is_const<decltype(cActual.cend())>() == is_const<decltype(cExpect.cend())>());
             CHECK(is_const<decltype(cActual.cend().operator->())>()
-                == is_const<decltype(cExpect.cend().operator->())>());
+                  == is_const<decltype(cExpect.cend().operator->())>());
             CHECK(is_const<decltype(*cActual.cend())>() == is_const<decltype(*cExpect.cend())>());
 
             CHECK(is_const<decltype(cActual.rbegin())>() == is_const<decltype(cExpect.rbegin())>());
             CHECK(is_const<decltype(cActual.rbegin().operator->())>()
-                == is_const<decltype(cExpect.rbegin().operator->())>());
+                  == is_const<decltype(cExpect.rbegin().operator->())>());
             CHECK(is_const<decltype(*cActual.rbegin())>()
-                == is_const<decltype(*cExpect.rbegin())>());
+                  == is_const<decltype(*cExpect.rbegin())>());
             CHECK(is_const<decltype(cActual.rend())>() == is_const<decltype(cExpect.rend())>());
             CHECK(is_const<decltype(cActual.rend().operator->())>()
-                == is_const<decltype(cExpect.rend().operator->())>());
+                  == is_const<decltype(cExpect.rend().operator->())>());
             CHECK(is_const<decltype(*cActual.rend())>() == is_const<decltype(*cExpect.rend())>());
 
             CHECK(is_const<decltype(cActual.crbegin())>()
-                == is_const<decltype(cExpect.crbegin())>());
+                  == is_const<decltype(cExpect.crbegin())>());
             CHECK(is_const<decltype(cActual.crbegin().operator->())>()
-                == is_const<decltype(cExpect.crbegin().operator->())>());
+                  == is_const<decltype(cExpect.crbegin().operator->())>());
             CHECK(is_const<decltype(*cActual.crbegin())>()
-                == is_const<decltype(*cExpect.crbegin())>());
+                  == is_const<decltype(*cExpect.crbegin())>());
             CHECK(is_const<decltype(cActual.crend())>() == is_const<decltype(cExpect.crend())>());
             CHECK(is_const<decltype(cActual.crend().operator->())>()
-                == is_const<decltype(cExpect.crend().operator->())>());
+                  == is_const<decltype(cExpect.crend().operator->())>());
             CHECK(is_const<decltype(*cActual.crend())>() == is_const<decltype(*cExpect.crend())>());
 
             CHECK(is_const<decltype(cActual.rbegin().base())>()
-                == is_const<decltype(cExpect.rbegin().base())>());
+                  == is_const<decltype(cExpect.rbegin().base())>());
             CHECK(is_const<decltype(cActual.rbegin().base().operator->())>()
-                == is_const<decltype(cExpect.rbegin().base().operator->())>());
+                  == is_const<decltype(cExpect.rbegin().base().operator->())>());
             CHECK(is_const<decltype(*cActual.rbegin().base())>()
-                == is_const<decltype(*cExpect.rbegin().base())>());
+                  == is_const<decltype(*cExpect.rbegin().base())>());
             CHECK(is_const<decltype(cActual.rend().base())>()
-                == is_const<decltype(cExpect.rend().base())>());
+                  == is_const<decltype(cExpect.rend().base())>());
             CHECK(is_const<decltype(cActual.rend().base().operator->())>()
-                == is_const<decltype(cExpect.rend().base().operator->())>());
+                  == is_const<decltype(cExpect.rend().base().operator->())>());
             CHECK(is_const<decltype(*cActual.rend().base())>()
-                == is_const<decltype(*cExpect.rend().base())>());
+                  == is_const<decltype(*cExpect.rend().base())>());
 
             CHECK(is_const<decltype(cActual.crbegin().base())>()
-                == is_const<decltype(cExpect.crbegin().base())>());
+                  == is_const<decltype(cExpect.crbegin().base())>());
             CHECK(is_const<decltype(cActual.crbegin().base().operator->())>()
-                == is_const<decltype(cExpect.crbegin().base().operator->())>());
+                  == is_const<decltype(cExpect.crbegin().base().operator->())>());
             CHECK(is_const<decltype(cActual.crend().base())>()
-                == is_const<decltype(cExpect.crend().base())>());
+                  == is_const<decltype(cExpect.crend().base())>());
             CHECK(is_const<decltype(*cActual.crbegin().base())>()
-                == is_const<decltype(*cExpect.crbegin().base())>());
+                  == is_const<decltype(*cExpect.crbegin().base())>());
             CHECK(is_const<decltype(*cActual.crbegin().base().operator->())>()
-                == is_const<decltype(*cExpect.crbegin().base().operator->())>());
+                  == is_const<decltype(*cExpect.crbegin().base().operator->())>());
             CHECK(is_const<decltype(*cActual.crend().base())>()
-                == is_const<decltype(*cExpect.crend().base())>());
+                  == is_const<decltype(*cExpect.crend().base())>());
         }
     }
 
@@ -572,8 +573,8 @@ TEST_CASE("modifiers")
             SECTION("from empty")
             {
                 /*
-                 erase(end()) is undefined, refer to:
-                 http://en.cppreference.com/w/cpp/container/list/erase
+                 * erase(end()) is undefined, refer to:
+                 * http://en.cppreference.com/w/cpp/container/list/erase
                  */
             }
 
@@ -639,8 +640,8 @@ TEST_CASE("modifiers")
             {
                 copyRandomPartContainerToLists(randomContainer, expect, actual);
 
-                expectReturnPos = expect.erase(----expect.end());
-                actualReturnPos = actual.erase(----actual.end());
+                expectReturnPos = expect.erase(---- expect.end());
+                actualReturnPos = actual.erase(---- actual.end());
 
                 CHECK(expectReturnPos == --expect.end());
                 CHECK(actualReturnPos == --actual.end());
@@ -653,8 +654,8 @@ TEST_CASE("modifiers")
             SECTION("from empty")
             {
                 /*
-                 erase(end(), end()) is undefined, refer to:
-                 http://en.cppreference.com/w/cpp/container/list/erase
+                 * erase(end(), end()) is undefined, refer to:
+                 * http://en.cppreference.com/w/cpp/container/list/erase
                  */
             }
 
@@ -678,8 +679,8 @@ TEST_CASE("modifiers")
 
                 SECTION("[begin : end)")
                 {
-                    expectReturnPos = expect.erase(expect.begin(), ++++++expect.begin());
-                    actualReturnPos = actual.erase(actual.begin(), ++++++actual.begin());
+                    expectReturnPos = expect.erase(expect.begin(), ++++++ expect.begin());
+                    actualReturnPos = actual.erase(actual.begin(), ++++++ actual.begin());
 
                     CHECK(expectReturnPos == expect.begin());
                     CHECK(actualReturnPos == actual.begin());
@@ -688,18 +689,18 @@ TEST_CASE("modifiers")
 
                 SECTION("(begin : end)")
                 {
-                    expectReturnPos = expect.erase(++++++expect.begin(), ------expect.end());
-                    actualReturnPos = actual.erase(++++++actual.begin(), ------actual.end());
+                    expectReturnPos = expect.erase(++++++ expect.begin(), ------ expect.end());
+                    actualReturnPos = actual.erase(++++++ actual.begin(), ------ actual.end());
 
-                    CHECK(expectReturnPos == ------expect.end());
-                    CHECK(actualReturnPos == ------actual.end());
+                    CHECK(expectReturnPos == ------ expect.end());
+                    CHECK(actualReturnPos == ------ actual.end());
                     isSame(expect, actual);
                 }
 
                 SECTION("(begin : end]")
                 {
-                    expectReturnPos = expect.erase(++++++expect.begin(), expect.end());
-                    actualReturnPos = actual.erase(++++++actual.begin(), actual.end());
+                    expectReturnPos = expect.erase(++++++ expect.begin(), expect.end());
+                    actualReturnPos = actual.erase(++++++ actual.begin(), actual.end());
 
                     CHECK(expectReturnPos == expect.end());
                     CHECK(actualReturnPos == actual.end());
@@ -852,7 +853,7 @@ TEST_CASE("modifiers")
                     randomValue = rand();
                     sz = 0;
 
-                    expectReturnPos = expect.insert(expect.end(), sz, randomValue);
+                    auto expectReturnPos = expect.insert(expect.end(), sz, randomValue);
                     actualReturnPos = actual.insert(actual.end(), sz, randomValue);
 
                     CHECK(expectReturnPos == expect.end());
@@ -1093,8 +1094,8 @@ TEST_CASE("modifiers")
                     expectReturnPos = expect.insert(expect.end(), randomIlist);
                     actualReturnPos = actual.insert(actual.end(), randomIlist);
 
-                    CHECK(expectReturnPos == ++++expect.begin());
-                    CHECK(actualReturnPos == ++++actual.begin());
+                    CHECK(expectReturnPos == ++++ expect.begin());
+                    CHECK(actualReturnPos == ++++ actual.begin());
                     isSame(expect, actual);
                 }
             }
@@ -1156,11 +1157,11 @@ TEST_CASE("modifiers")
                     randomSmallContainer = {};
 
                     expectReturnPos = expect.insert(expect.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == expect.end());
                     CHECK(actualReturnPos == actual.end());
@@ -1170,11 +1171,11 @@ TEST_CASE("modifiers")
                 SECTION("container is non-empty")
                 {
                     expectReturnPos = expect.insert(expect.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == expect.begin());
                     CHECK(actualReturnPos == actual.begin());
@@ -1189,11 +1190,11 @@ TEST_CASE("modifiers")
                     randomSmallContainer = {};
 
                     expectReturnPos = expect.insert(expect.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == expect.begin());
                     CHECK(actualReturnPos == actual.begin());
@@ -1203,11 +1204,11 @@ TEST_CASE("modifiers")
                 SECTION("container is non-empty")
                 {
                     expectReturnPos = expect.insert(expect.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == expect.begin());
                     CHECK(actualReturnPos == actual.begin());
@@ -1222,11 +1223,11 @@ TEST_CASE("modifiers")
                     randomSmallContainer = {};
 
                     expectReturnPos = expect.insert(expect.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == expect.end());
                     CHECK(actualReturnPos == actual.end());
@@ -1236,14 +1237,14 @@ TEST_CASE("modifiers")
                 SECTION("container is non-empty")
                 {
                     expectReturnPos = expect.insert(expect.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(actual.end(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
-                    CHECK(expectReturnPos == ++++expect.begin());
-                    CHECK(actualReturnPos == ++++actual.begin());
+                    CHECK(expectReturnPos == ++++ expect.begin());
+                    CHECK(actualReturnPos == ++++ actual.begin());
                     isSame(expect, actual);
                 }
             }
@@ -1255,11 +1256,11 @@ TEST_CASE("modifiers")
                     randomSmallContainer = {};
 
                     expectReturnPos = expect.insert(++expect.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(++actual.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == ++expect.begin());
                     CHECK(actualReturnPos == ++actual.begin());
@@ -1269,11 +1270,11 @@ TEST_CASE("modifiers")
                 SECTION("container is non-empty")
                 {
                     expectReturnPos = expect.insert(++expect.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
                     actualReturnPos = actual.insert(++actual.begin(),
-                        randomSmallContainer.begin(),
-                        randomSmallContainer.end());
+                                                    randomSmallContainer.begin(),
+                                                    randomSmallContainer.end());
 
                     CHECK(expectReturnPos == ++expect.begin());
                     CHECK(actualReturnPos == ++actual.begin());
@@ -1286,11 +1287,11 @@ TEST_CASE("modifiers")
                 randomSmallContainer = {rand()};
 
                 expectReturnPos = expect.insert(++expect.begin(),
-                    randomSmallContainer.begin(),
-                    randomSmallContainer.end());
+                                                randomSmallContainer.begin(),
+                                                randomSmallContainer.end());
                 actualReturnPos = actual.insert(++actual.begin(),
-                    randomSmallContainer.begin(),
-                    randomSmallContainer.end());
+                                                randomSmallContainer.begin(),
+                                                randomSmallContainer.end());
 
                 CHECK(expectReturnPos == ++expect.begin());
                 CHECK(actualReturnPos == ++actual.begin());
@@ -1389,17 +1390,17 @@ TEST_CASE("modifiers")
             CHECK(*actual.begin() == 222);
             CHECK(*++actual.begin() == 111);
             CHECK(*--actual.end() == 111);
-            CHECK(*----actual.end() == 222);
+            CHECK(*---- actual.end() == 222);
 
             actual.push_front(333);
             CHECK(actual.front() == 333);
             CHECK(actual.back() == 111);
             CHECK(*actual.begin() == 333);
             CHECK(*++actual.begin() == 222);
-            CHECK(*++++actual.begin() == 111);
+            CHECK(*++++ actual.begin() == 111);
             CHECK(*--actual.end() == 111);
-            CHECK(*----actual.end() == 222);
-            CHECK(*------actual.end() == 333);
+            CHECK(*---- actual.end() == 222);
+            CHECK(*------ actual.end() == 333);
         }
 
         SECTION("push back")
@@ -1416,17 +1417,17 @@ TEST_CASE("modifiers")
             CHECK(*actual.begin() == 111);
             CHECK(*++actual.begin() == 222);
             CHECK(*--actual.end() == 222);
-            CHECK(*----actual.end() == 111);
+            CHECK(*---- actual.end() == 111);
 
             actual.push_back(333);
             CHECK(actual.front() == 111);
             CHECK(actual.back() == 333);
             CHECK(*actual.begin() == 111);
             CHECK(*++actual.begin() == 222);
-            CHECK(*++++actual.begin() == 333);
+            CHECK(*++++ actual.begin() == 333);
             CHECK(*--actual.end() == 333);
-            CHECK(*----actual.end() == 222);
-            CHECK(*------actual.end() == 111);
+            CHECK(*---- actual.end() == 222);
+            CHECK(*------ actual.end() == 111);
         }
 
         SECTION("random push")

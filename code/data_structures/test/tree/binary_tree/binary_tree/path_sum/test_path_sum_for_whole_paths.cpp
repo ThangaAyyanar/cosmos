@@ -1,21 +1,24 @@
-#include "catch.hpp"
+#define CATCH_CONFIG_MAIN
+#include "../../../../../../../test/c++/catch.hpp"
 #include <vector>
 #include <memory>
 #include <queue>
-#include "../tree_node/tree_node.cpp"
-#include "../tree_serializer/tree_serializer.cpp"
-#include "path_sum.hpp"
+#include "../../../../../src/tree/binary_tree/binary_tree/node/node.cpp"
+#include "../../../../../src/tree/binary_tree/binary_tree/serializer/serializer.cpp"
+#include "../../../../../src/tree/binary_tree/binary_tree/path_sum/path_sum.hpp"
 
 using Node = TreeNode<int>;
 using PNode = std::shared_ptr<Node>;
 
-bool isSame(std::vector<std::vector<int>> &a, std::vector<std::vector<int>> &b) {
+bool isSame(std::vector<std::vector<int>> &a, std::vector<std::vector<int>> &b)
+{
     std::sort(a.begin(), a.end());
     std::sort(b.begin(), b.end());
 
     if (a.size() != b.size())
         return false;
-    for (size_t i = 0; i < a.size(); ++i) {
+    for (size_t i = 0; i < a.size(); ++i)
+    {
         if (a.at(i).size() != b.at(i).size())
             return false;
         for (size_t j = 0; j < a.at(i).size(); ++j)
